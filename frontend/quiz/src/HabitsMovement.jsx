@@ -1,10 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-function HabitsMovement({ nextStep, prevStep, handleDataUpdate }) {
+function HabitsMovement({ formData, nextStep, prevStep, handleDataUpdate }) {
   const [localData, setLocalData] = useState({
-    activityLevel: '',
-    mentalState: '',
+    activityLevel: formData.activityLevel || '',
+    mentalState: formData.mentalState || ''
   });
+
+  useEffect(() => {
+    setLocalData({
+      activityLevel: formData.activityLevel,
+      mentalState: formData.mentalState
+    });
+  }, [formData]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -20,16 +27,16 @@ function HabitsMovement({ nextStep, prevStep, handleDataUpdate }) {
     <div>
       <h2>🧘 Habits & Movement</h2>
 
-      <label>How active are you during a typical day?</label><br />
-      <select name="activityLevel" onChange={handleChange}>
+      <label>Activity Level:</label><br />
+      <select name="activityLevel" value={localData.activityLevel} onChange={handleChange}>
         <option value="">Select</option>
         <option value="Very active">Very active (daily exercise or physical labor)</option>
         <option value="Moderately active">Moderately active (walks, occasional exercise)</option>
         <option value="Sedentary">Sedentary (desk job, little movement)</option>
       </select><br />
 
-      <label>Current mental/emotional state:</label><br />
-      <select name="mentalState" onChange={handleChange}>
+      <label>Mental/Emotional State:</label><br />
+      <select name="mentalState" value={localData.mentalState} onChange={handleChange}>
         <option value="">Select</option>
         <option value="Calm and balanced">Calm and balanced</option>
         <option value="Stressed or anxious">Stressed or anxious</option>

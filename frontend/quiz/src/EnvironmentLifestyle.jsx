@@ -1,11 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-function EnvironmentLifestyle({ nextStep, prevStep, handleDataUpdate }) {
+function EnvironmentLifestyle({ formData, nextStep, prevStep, handleDataUpdate }) {
   const [localData, setLocalData] = useState({
-    location: '',
-    dailyRoutine: '',
-    climate: '',
+    location: formData.location || '',
+    dailyRoutine: formData.dailyRoutine || '',
+    climate: formData.climate || ''
   });
+
+  useEffect(() => {
+    setLocalData({
+      location: formData.location,
+      dailyRoutine: formData.dailyRoutine,
+      climate: formData.climate
+    });
+  }, [formData]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -24,8 +32,8 @@ function EnvironmentLifestyle({ nextStep, prevStep, handleDataUpdate }) {
       <label>Location (City & Country):</label><br />
       <input type="text" name="location" value={localData.location} onChange={handleChange} /><br />
 
-      <label>Typical Daily Routine:</label><br />
-      <select name="dailyRoutine" onChange={handleChange}>
+      <label>Daily Routine:</label><br />
+      <select name="dailyRoutine" value={localData.dailyRoutine} onChange={handleChange}>
         <option value="">Select</option>
         <option value="Regular">Regular wake and sleep times</option>
         <option value="Irregular">Irregular schedule</option>
@@ -33,7 +41,7 @@ function EnvironmentLifestyle({ nextStep, prevStep, handleDataUpdate }) {
       </select><br />
 
       <label>Climate:</label><br />
-      <select name="climate" onChange={handleChange}>
+      <select name="climate" value={localData.climate} onChange={handleChange}>
         <option value="">Select</option>
         <option value="Hot and dry">Hot and dry</option>
         <option value="Hot and humid">Hot and humid</option>
