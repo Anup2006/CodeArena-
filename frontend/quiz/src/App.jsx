@@ -3,7 +3,7 @@ import PersonalConstitution from './PersonalConstitution';
 import EnvironmentLifestyle from './EnvironmentLifestyle';
 import DietDigestion from './DietDigestion';
 import HabitsMovement from './HabitsMovement';
-import Summary from './Summary';
+
 
 function App() {
   const [step, setStep] = useState(1);
@@ -63,8 +63,6 @@ function App() {
           handleDataUpdate={handleDataUpdate}
         />
       );
-    case 5:
-      return <Summary formData={formData} prevStep={prevStep} />;
     default:
       return <div>Thank you for completing the survey!</div>;
   }
